@@ -13,21 +13,13 @@ public class BaseResponse<T>
 
     public T Data { get; set; }
 
-    public BaseResponse(bool isError, string message)
-    {
-        IsError = isError;
-        Message = message;
-    }
 
-    public BaseResponse(bool isError, bool isExceptedError, string defaultMessage)
+    public BaseResponse(bool isError = false, bool isExceptedError = false, string message = "", string defaultMessage= "", T data = null)
     {
         IsError = isError;
         IsExceptedError = isExceptedError;
+        Message = message;
         DefaultMessage = defaultMessage;
-    }
-
-    public BaseResponse(T data)
-    {
         Data = data;
     }
 }

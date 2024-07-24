@@ -1,17 +1,14 @@
 import { useState } from 'react';
-import { sendDataToBackend } from '../services/calculationService';
+import { makeCalculationRequest } from '../services/calculationService';
 
 function App() {
-  const [inputValue, setInputValue] = useState('');
-  const [backendData, setBackendData] = useState('');
+  const [input, setInput] = useState('');
+  const [resultText, setResultText] = useState('');
 
   const Calculate = () => {
-    sendDataToBackend(inputValue)
+    makeCalculationRequest(input)
     .then((result) => {
-      setBackendData(result);
-    })
-    .catch(() => {
-      
+      setResultText(result);
     });
   };
 
@@ -19,13 +16,13 @@ function App() {
     <>
       <input
           type="text"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           placeholder="Введите данные"
         />
         <button onClick={Calculate}>Вычислить</button>
         <div>
-          <p>{backendData}</p>
+          <p>{resultText}</p>
         </div>
     </>
   )

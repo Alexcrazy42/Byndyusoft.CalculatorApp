@@ -1,29 +1,37 @@
 import axios from 'axios';
+import base_url from '../const/url';
 
-export const sendDataToBackend = async (input: string) => {
+
+export const makeCalculationRequest = async (input: string) => {
+    const headers = {
+      'Content-Type': 'application/json',
+      'accept': 'text/plain'
+    };
+    const data = {
+      expression: input
+    };
+
     try {
-      const url = 'https://localhost:7086/api/v1/calculations';
-      const headers = {
-        'Content-Type': 'application/json',
-        'accept': 'text/plain'
-      };
-      const data = {
-        expression: input
-      };
-  
-      const response = await axios.post(url, data, { headers });
-  
-      if (response.status === 200) {
-        const { isError, isExceptedError, data: { result } } = response.data;
-        if (!isError && !isExceptedError) {
-          return result;
-        } else {
-          return response.data.message;
-        }
+      const response = await axios.post(base_url + "/api/v1/calculations", data, { headers });
+      const { isError, isExceptedError, message, defaultMessage } = response.data;
+      if(!isError){
+        const { data: { result } } = response.data;
+        return result;
       } else {
-        return "Ошибка!";
+        if(isExceptedError) {
+          return message;
+        } else {
+          return defaultMessage;
+        }
       }
     } catch (error) {
-      console.error('Произошла ошибка при запросе:', error.message);
+      if (error.response) {
+        return "Ошибка!";
+
+      } else if (error.request) {
+        return "Проблема с сетью!"
+      } else {
+        return "Ошибка!"
+      }
     }
-};  
+};    

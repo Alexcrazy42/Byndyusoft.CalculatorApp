@@ -32,12 +32,10 @@ public class CalculationController : Controller
         }
         catch (CalculationException ex)
         {
-            base.Response.StatusCode = 400;
-            return new(isError: true, message: ex.Message);
+            return new(isError: true, isExceptedError: true, message: ex.Message);
         }
         catch (Exception)
         {
-            base.Response.StatusCode = 500;
             return new(isError: true, isExceptedError: false, defaultMessage: "В вычислениях что-то пошло не так!");
         }
     }
