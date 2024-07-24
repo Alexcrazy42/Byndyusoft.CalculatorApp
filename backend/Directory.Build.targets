@@ -1,0 +1,7 @@
+<Project>
+	<PropertyGroup>
+		<CompanyName>Byndyusoft</CompanyName>
+		<MicroserviceName>CalculatorService</MicroserviceName>
+	</PropertyGroup>
+
+</Project>
