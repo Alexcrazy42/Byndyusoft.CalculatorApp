@@ -1,5 +1,5 @@
 ﻿using Byndyusoft.Core.Exceptions;
-using Byndyusoft.Core.Helpers;
+using Byndyusoft.Core.Helpers.Abstract;
 using Byndyusoft.Core.Models;
 using Byndyusoft.Core.Services.Abstract;
 using System.Globalization;
@@ -25,6 +25,7 @@ public class CalculationService : ICalculationService
 
     public ExpressionResult Calculate(Expression expression)
     {
+        //var preparedInput = expression.Input;
         var preparedInput = preparingExpressionService.GetPreparedExpression(expression.Input);
         Queue<string> postfix = ShuntingYardAlgorithm(preparedInput);
         var result = EvaluatePostfix(postfix);

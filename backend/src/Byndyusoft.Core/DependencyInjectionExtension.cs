@@ -1,4 +1,5 @@
-﻿using Byndyusoft.Core.Helpers;
+﻿using Byndyusoft.Core.Helpers.Abstract;
+using Byndyusoft.Core.Helpers.Implementations;
 using Byndyusoft.Core.Services.Abstract;
 using Byndyusoft.Core.Services.Implementations;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +14,7 @@ public static class DependencyInjectionExtension
         services.AddTransient<IPreparingExpressionService, PreparingExpressionService>();
         services.AddTransient<ITokenizeService, TokenizeService>();
         services.AddTransient<IMathHelper, MathHelper>();
+        services.AddSingleton<IOperationHelper, OperationHelper>();
         return services;
     }
 }

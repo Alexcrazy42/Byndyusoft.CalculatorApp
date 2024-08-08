@@ -1,4 +1,4 @@
-﻿namespace Byndyusoft.Core.Helpers;
+﻿namespace Byndyusoft.Core.Helpers.Abstract;
 
 public interface IMathHelper
 {

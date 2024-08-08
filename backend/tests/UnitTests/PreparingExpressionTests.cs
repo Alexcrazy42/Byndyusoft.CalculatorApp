@@ -1,5 +1,5 @@
-﻿using Byndyusoft.Core.Services.Abstract;
-using Byndyusoft.Core.Services.Implementations;
+﻿using Byndyusoft.Core;
+using Byndyusoft.Core.Services.Abstract;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace UnitTests;
@@ -12,7 +12,7 @@ public class PreparingExpressionTests
     {
         var services = new ServiceCollection();
 
-        services.AddTransient<IPreparingExpressionService, PreparingExpressionService>();
+        services.AddServices();
         var _serviceProvider = services.BuildServiceProvider();
         preparingExpressionService = _serviceProvider.GetService<IPreparingExpressionService>();
     }
@@ -38,8 +38,11 @@ public class PreparingExpressionTests
     [InlineData("(10.5 - (3.2 * 2.1)) / 2.4", "(10.5 - (3.2 * 2.1)) / 2.4")]
     [InlineData("(5.3 + 3.1) * (7.6 - 4.2)", "(5.3 + 3.1) * (7.6 - 4.2)")]
     [InlineData("(12.6 / 3.2) * (8.1 - 5.4)", "(12.6 / 3.2) * (8.1 - 5.4)")]
-    public void PreparingExpressions_PreparingCorrect(string input, string output)
+    [InlineData("3+-2", "3 + -2")]
+    [InlineData("-3+-2", "-3 + -2")]
+    public void PreparingExpressions_PreparingCorrect(string input, string expected)
     {
-        Assert.Equal(preparingExpressionService.GetPreparedExpression(input), output);
+        var actual = preparingExpressionService.GetPreparedExpression(input);
+        Assert.Equal(actual, expected);
     }
 }
